@@ -13,12 +13,12 @@ class MyHomePage extends StatefulWidget {
   MyHomePage(this.diary);
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<MyHomePage> createState() => MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class MyHomePageState extends State<MyHomePage> {
 
-  List<PageDiary>?  pages;
+  List<PageDiary> pages;
 
   void goForm() {
     Navigator.push(context, MaterialPageRoute(
@@ -44,7 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   getListView () {
     return ListView.builder(
-      itemCount: pages!.length,
+      itemCount: pages?.length,
       itemBuilder: (BuildContext context, int index) {
         return PageCard(pages![index]);
       });
