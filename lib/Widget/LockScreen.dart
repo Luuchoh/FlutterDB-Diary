@@ -30,7 +30,6 @@ class LockScreenState extends State<LockScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
       children: <Widget>[
         Visibility(
@@ -80,14 +79,14 @@ class LockScreenState extends State<LockScreen> {
             child: Text(value.type),
           );
         }).toList(),
-        onChanged: (value) => onChangedDiary,
+        onChanged: (value) => onChangedDiary(value),
       )
     : SizedBox.shrink();
   }
 
-  onChangedDiary (Diary diary) {
+  onChangedDiary (Diary? diary) {
     setState(() {
-      this.dropDownValue = diary;
+      this.dropDownValue = diary!;
     });
   }
 
@@ -98,13 +97,14 @@ class LockScreenState extends State<LockScreen> {
     }
   }
 
-  unlock() {
-
+  unlock() async {
+    Diary diary = await dropDownValue.checkEnterCode(ctrlCode.text);
+    if (diary != null) goHome(diary);
   }
   
   goHome(Diary diary) {
     Navigator.push(context, MaterialPageRoute(
-        builder: (context) => MyHomePage(diary)
+        builder: (BuildContext context) => MyHomePage(diary)
       )
     );
   }

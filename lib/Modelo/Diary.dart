@@ -36,4 +36,16 @@ class Diary extends CRUD {
     return (id !> 0) ? this : null;
   }
 
+  Future<List<Diary>>getDiaries() async {
+    var result = await query('SELECT * FROM ${DBTable.DIARY}');
+
+    return getList(result);
+  }
+
+  checkEnterCode(String enterCode) async{
+    var result = await query("SELECT * FROM ${DBTable.DIARY} WHERE id= ? AND enterCode=?",
+                              arguments:[this.id, enterCode]);
+
+    return Diary.toObject(result[0]);
+  }
 }

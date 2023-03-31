@@ -37,4 +37,10 @@ class PageDiary extends CRUD {
     return (parsed as List).map((map) => PageDiary.toObject(map)).toList();
   }
 
+  Future<List<PageDiary>> getPages(idDiary) async{
+    var result = await query("SELECT * FROM ${DBTable.PAGE} WHERE diaryId = ?",
+                            arguments: [idDiary]);
+    return getList(result);
+  }
+
 }

@@ -10,13 +10,15 @@ abstract class CRUD {
     return DB().open();
   }
 
-  query (String sql, List<dynamic> arguments) async {
+  query (String sql, {List<dynamic>? arguments}) async {
     final db = await database;
 
     // 'OR 1=1 --' --SQLInjection
     // db.execute(sql)
     // db.query(table)
-    await db.rawQuery(sql, arguments);
+
+    var response = await db.rawQuery(sql, arguments);
+    return response;
   }
 
   update (Map<String, dynamic> data) async {

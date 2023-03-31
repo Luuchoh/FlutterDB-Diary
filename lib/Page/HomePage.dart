@@ -18,7 +18,7 @@ class MyHomePage extends StatefulWidget {
 
 class MyHomePageState extends State<MyHomePage> {
 
-  List<PageDiary> pages;
+  List<PageDiary>? pages;
 
   void goForm() {
     Navigator.push(context, MaterialPageRoute(
@@ -33,7 +33,18 @@ class MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text("Bienvenid@ a tu diario ${widget.diary.type}"),
       ),
-      body: getListView(),
+      body: Center(
+        child: FutureBuilder<List<PageDiary>>(
+          future: PageDiary().getPages(widget.diary.id),
+          initialData: List.empty(),
+          builder: (BuildContext context, AsyncSnapshot<List<PageDiary>> snapshot) {
+            this.pages = snapshot.data;
+            return (snapshot.connectionState == ConnectionState.done)
+                ? getListView()
+                : CircularProgressIndicator();
+          },
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: goForm,
         tooltip: 'Increment',
