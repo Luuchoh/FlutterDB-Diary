@@ -56,7 +56,17 @@ class MyHomePageState extends State<MyHomePage> {
     return ListView.builder(
       itemCount: pages?.length,
       itemBuilder: (BuildContext context, int index) {
-        return PageCard(addPage, pages![index]);
+        PageDiary pageDiary = pages![index];
+        return Dismissible(
+          key: ObjectKey(pageDiary),
+          onDismissed: (direction) {
+            pageDiary.delete(pageDiary!.id!);
+            setState(() {
+              pages?.removeAt(index);
+            });
+          },
+          child: PageCard(addPage, pages![index])
+        );
       });
   }
 
