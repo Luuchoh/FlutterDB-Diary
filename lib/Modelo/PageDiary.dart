@@ -7,19 +7,19 @@ class PageDiary extends CRUD {
   String date;
   String title;
   String content;
-  int idDiary;
+  int diaryId;
 
-  PageDiary ({this.id, this.date = "", this.title = "", this.content = "", this.idDiary = 0}): super(DBTable.PAGE);
+  PageDiary ({this.id, this.date = "", this.title = "", this.content = "", this.diaryId = 0}): super(DBTable.PAGE);
 
   factory PageDiary.toObject(Map<dynamic, dynamic> data) {
     return (data != null)
         ? PageDiary(
-      id: data['id'],
-      date: data['date'],
-      title: data['title'],
-      content: data['content'],
-      idDiary: data['idDiary'],
-    )
+            id: data['id'],
+            date: data['date'],
+            title: data['title'],
+            content: data['content'],
+            diaryId: data['diaryId'],
+          )
         : PageDiary();
   }
 
@@ -29,7 +29,7 @@ class PageDiary extends CRUD {
       'date': date,
       'title': title,
       'content': content,
-      'idDiary': idDiary,
+      'diaryId': diaryId,
     };
   }
 
@@ -41,6 +41,11 @@ class PageDiary extends CRUD {
     var result = await query("SELECT * FROM ${DBTable.PAGE} WHERE diaryId = ?",
                             arguments: [idDiary]);
     return getList(result);
+  }
+
+  saveOrUpdate() async{
+    id = (id != null) ? await update(this.toMap()): await insert(this.toMap());
+    return (id !> 0) ? this : null;
   }
 
 }

@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:sqlite_flutter/Modelo/Diary.dart';
 import 'package:sqlite_flutter/Page/FormPage.dart';
 import 'package:sqlite_flutter/Widget/Card/PageCard.dart';
-
-import '../Modelo/PageDiary.dart';
+import 'package:sqlite_flutter/Modelo/PageDiary.dart';
 
 class MyHomePage extends StatefulWidget {
 
@@ -22,7 +21,7 @@ class MyHomePageState extends State<MyHomePage> {
 
   void goForm() {
     Navigator.push(context, MaterialPageRoute(
-        builder: (BuildContext context) => FormPage()
+        builder: (BuildContext context) => FormPage(addPage, diary: widget.diary,)
       )
     );
   }
@@ -57,8 +56,12 @@ class MyHomePageState extends State<MyHomePage> {
     return ListView.builder(
       itemCount: pages?.length,
       itemBuilder: (BuildContext context, int index) {
-        return PageCard(pages![index]);
+        return PageCard(addPage, pages![index]);
       });
+  }
+
+  addPage(PageDiary pageDiary) {
+    pages?.add(pageDiary);
   }
 
 }
