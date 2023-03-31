@@ -31,6 +31,14 @@ class MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Bienvenid@ a tu diario ${widget.diary.type}"),
+        actions: <Widget>[
+          IconButton(
+            onPressed: addPages,
+            icon: Icon(
+              Icons.playlist_add,
+            )
+          ),
+        ],
       ),
       body: Center(
         child: FutureBuilder<List<PageDiary>>(
@@ -60,7 +68,7 @@ class MyHomePageState extends State<MyHomePage> {
         return Dismissible(
           key: ObjectKey(pageDiary),
           onDismissed: (direction) {
-            pageDiary.delete(pageDiary!.id!);
+            pageDiary.delete(pageDiary.id!);
             setState(() {
               pages?.removeAt(index);
             });
@@ -72,6 +80,47 @@ class MyHomePageState extends State<MyHomePage> {
 
   addPage(PageDiary pageDiary) {
     pages?.add(pageDiary);
+  }
+
+  addPages() {
+    List<PageDiary> pages = [
+      PageDiary(
+        id: 10,
+        date: "15-04-2023",
+        title: "Pagina 10",
+        content: "Pagina 10",
+        diaryId: 0
+      ),
+      PageDiary(
+          id: 11,
+          date: "15-04-2023",
+          title: "Pagina 11",
+          content: "Pagina 11",
+          diaryId: 0
+      ),
+      PageDiary(
+          id: 12,
+          date: "15-04-2023",
+          title: "Pagina 12",
+          content: "Pagina 12",
+          diaryId: 0
+      ),
+      PageDiary(
+          id: 12,
+          date: "15-04-2023",
+          title: "Pagina 12",
+          content: "Pagina 12",
+          diaryId: 0
+      ),
+      PageDiary(
+          id: 13,
+          date: "15-04-2023",
+          title: "Pagina 13",
+          content: "Pagina 13",
+          diaryId: 0
+      ),
+    ];
+    PageDiary().insertPages(pages);
   }
 
 }

@@ -1,5 +1,6 @@
 import 'package:sqlite_flutter/DataBase/CRUD.dart';
 import 'package:sqlite_flutter/DataBase/DBTable.dart';
+import 'package:sqflite/sqflite.dart';
 
 class PageDiary extends CRUD {
 
@@ -46,6 +47,21 @@ class PageDiary extends CRUD {
   saveOrUpdate() async{
     id = (id != null) ? await update(this.toMap()): await insert(this.toMap());
     return (id !> 0) ? this : null;
+  }
+
+  insertPages(List<PageDiary> pages) async {
+    final db = await database;
+    db.transaction((database) async {
+      Batch batch = database.batch();
+      for(PageDiary pageDiary in pages) {
+        batch.insert(table, pageDiary.toMap());
+      }
+
+      var result = await batch.commit(continueOnError: true, noResult: false);
+
+      print("resultado $result");
+
+    });
   }
 
 }
